@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Artisan Studio</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Elegant Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- External Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen animate-fade-in">
+
+  <!-- Top Header with Site Name -->
+  <header class="ai-header sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="ai-title">
+        <span class="ai-title-text">AI ARTISAN STUDIO</span>
+        <span class="ai-title-glow"></span>
+        <span class="ai-title-shadow"></span>
+      </h1>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 p-8">
+    <!-- Main Content Header -->
+    <header class="col-span-full mb-12 text-center relative">
+      <div class="floating-particles" id="particles"></div>
+      <h2 class="font-display text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+        Where Creativity Meets AI
+      </h2>
+      <p class="font-body text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed mb-8">
+        Create limitless designs with the precision of a digital master. Transform your vision into timeless art.
+      </p>
+      <div class="flex justify-center gap-8">
+        <div class="artistic-border px-6 py-3">
+          <span class="font-body text-text-primary">🎨 Infinite Creativity</span>
+        </div>
+        <div class="artistic-border px-6 py-3">
+          <span class="font-body text-text-primary">⚡ AI-Powered</span>
+        </div>
+        <div class="artistic-border px-6 py-3">
+          <span class="font-body text-text-primary">✨ Timeless Design</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Left: Controls -->
+    <main class="card card-elevated p-8" aria-label="Design Controls">
+      <!-- Tab Navigation -->
+      <div class="tab-container mb-8">
+        <button id="logoTab" class="tab-button active" onclick="switchTab('logo')">
+          🎨 Logo Design
+        </button>
+        <button id="mockupTab" class="tab-button" onclick="switchTab('mockup')">
+          👕 Product Mockup
+        </button>
+      </div>
+
+      <!-- Logo Design Section -->
+      <div id="logoSection">
+        <section class="mb-6">
+          <label class="block font-body text-sm font-medium text-text-primary mb-3" for="logoPrompt">Design Vision</label>
+          <textarea id="logoPrompt" rows="4" placeholder="Describe your ideal logo design... perhaps a timeless emblem that captures the essence of your brand with elegant typography and refined proportions" class="w-full input-elegant focus-ring" aria-describedby="logoPromptHelp"></textarea>
+          <p id="logoPromptHelp" class="font-body text-xs text-text-secondary mt-2">Leave blank for an inspired default creation.</p>
+        </section>
+
+        <section class="mb-6" aria-labelledby="logoStyleHeading">
+          <h3 id="logoStyleHeading" class="font-body font-medium text-text-primary mb-3">Artistic Style</h3>
+          <div id="logoStyleGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-64 overflow-y-auto" role="group" aria-label="Logo style options"></div>
+        </section>
+
+        <section class="mb-6" aria-labelledby="logoColorHeading">
+          <h3 id="logoColorHeading" class="font-body font-medium text-text-primary mb-3">Color Palette</h3>
+          <div id="logoColorFlex" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 max-h-48 overflow-y-auto" role="group" aria-label="Color scheme options"></div>
+        </section>
+
+        <section class="mb-6">
+          <button id="generateLogoBtn" class="w-full btn-primary focus-ring" aria-live="polite">
+            <span id="logoBtnText">Craft Logo Design</span>
+          </button>
+          <div id="logoLoadingArea" class="mt-4 hidden text-sm text-text-secondary flex items-center gap-3" role="status" aria-live="polite">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <div class="font-body">Crafting your design with precision...</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Product Mockup Section -->
+      <div id="mockupSection" class="hidden">
+        <section class="mb-4">
+          <label class="block font-body text-sm font-medium text-text-primary mb-3" for="mockupPrompt">Design Vision</label>
+          <textarea id="mockupPrompt" rows="4" placeholder="e.g., A vintage-inspired t-shirt design with retro graphics and bold typography" class="w-full input-elegant focus-ring" aria-describedby="mockupPromptHelp"></textarea>
+          <p id="mockupPromptHelp" class="font-body text-xs text-text-secondary mt-2">If empty, a professional default prompt will be used.</p>
+        </section>
+
+        <section class="mb-6" aria-labelledby="productHeading">
+          <h3 id="productHeading" class="font-body font-medium text-text-primary mb-3">Product Type</h3>
+          <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-64 overflow-y-auto" role="group" aria-label="Product type options"></div>
+        </section>
+
+        <section class="mb-6" aria-labelledby="mockupStyleHeading">
+          <h3 id="mockupStyleHeading" class="font-body font-medium text-text-primary mb-3">Design Style</h3>
+          <div id="mockupStyleGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-64 overflow-y-auto" role="group" aria-label="Design style options"></div>
+        </section>
+
+        <section class="mb-6" aria-labelledby="mockupColorHeading">
+          <h3 id="mockupColorHeading" class="font-body font-medium text-text-primary mb-3">Color Palette</h3>
+          <div id="mockupColorFlex" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 max-h-48 overflow-y-auto" role="group" aria-label="Color scheme options"></div>
+        </section>
+
+        <section class="mb-4">
+          <label for="mockupDisplayStyle" class="font-body font-medium text-text-primary mb-3 block">Display Style</label>
+          <select id="mockupDisplayStyle" class="w-full input-elegant focus-ring">
+            <option>3D Product Mockup</option>
+            <option>Lifestyle Mockup</option>
+            <option>Flat Design (Vector)</option>
+          </select>
+        </section>
+
+        <section class="mb-4">
+          <button id="generateMockupBtn" class="w-full btn-primary focus-ring" aria-live="polite">
+            <span id="mockupBtnText">Craft Product Mockup</span>
+          </button>
+          <div id="mockupLoadingArea" class="mt-4 hidden text-sm text-text-secondary flex items-center gap-3" role="status" aria-live="polite">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <div class="font-body">Crafting your product mockup with precision...</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Export Section -->
+      <section class="mt-8">
+        <h3 class="font-display text-xl font-medium text-text-primary mb-4">Preserve Your Creation</h3>
+        <div class="flex gap-4">
+          <button id="downloadPng" class="flex-1 btn-secondary focus-ring">Download PNG</button>
+          <button id="downloadJpg" class="flex-1 btn-secondary focus-ring">Download JPG</button>
+        </div>
+        <p class="font-body text-xs text-text-secondary mt-3">High-resolution 1000×1000px format. PNG preserves transparency for versatile use.</p>
+      </section>
+
+      <section class="mt-8">
+        <h3 class="font-display text-xl font-medium text-text-primary mb-4">Design Wisdom</h3>
+        <ul class="font-body text-sm text-text-secondary space-y-2">
+          <li class="flex items-start gap-2">
+            <span class="text-accent">✦</span>
+            <span>PNG preserves transparency for layered compositions</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent">✦</span>
+            <span>JPG offers optimal file size for digital platforms</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent">✦</span>
+            <span>1000×1000px ensures crisp detail at any scale</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent">✦</span>
+            <span>High-resolution preserves the artist's intent</span>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Right: Preview + history -->
+    <aside class="card card-elevated p-8" aria-label="Design Gallery">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-display text-2xl font-medium text-text-primary">Design Gallery</h2>
+        <div class="font-body text-sm text-text-secondary">Timeless Creations</div>
+      </div>
+
+      <div id="previewContainer" class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 flex items-center justify-center border border-border" style="height:480px;">
+        <div id="previewInner" class="w-full h-full flex items-center justify-center">
+          <div id="previewBox" class="max-h-[440px] w-full flex items-center justify-center">
+            <img id="previewImage" alt="Generated design preview" class="max-h-[440px] object-contain rounded-lg shadow-lg" src="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="font-display text-xl font-medium text-text-primary mb-4">Design Archive</h3>
+        <div id="historyGrid" class="grid grid-cols-2 gap-4" aria-live="polite"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- notifications -->
+  <div id="notification" class="notification hidden" aria-live="assertive"></div>
+
+  <!-- External Scripts -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
